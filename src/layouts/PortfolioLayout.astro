@@ -1,0 +1,115 @@
+---
+import '@/styles/global.css'
+import BaseHead from '@/components/layout/BaseHead.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import BackButton from '@/components/ui/BackButton.astro'
+import FormattedDate from '@/components/widgets/FormattedDate.astro'
+import GitHubCard from '@/components/ui/GitHubCard.astro'
+import { render } from 'astro:content'
+import { themeConfig } from '@/config'
+
+const { entry } = Astro.props
+const { title, description, image, url } = entry.data
+const { Content } = await render(entry)
+---
+
+<BaseLayout title={title} description={description} type="page">
+  <BaseHead title={title} description={description} image={image} slot="head" />
+  
+  <div class="page-content">
+    <div>
+      <Header />
+    </div>
+    <main>
+      <article class="portfolio-item-content">
+        <div class="portfolio-item-header">
+          <BackButton />
+          <header>
+            <h1>{title}</h1>
+            {description && <p class="description">{description}</p>}
+          </header>
+        </div>
+        
+        <div class="portfolio-item-body prose">
+          <Content />
+        </div>
+      </article>
+    </main>
+    <GitHubCard />
+    {
+      themeConfig.general.footer && (
+        <div>
+          <Footer />
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-content main {
+    flex: 1;
+  }
+
+  .portfolio-item-content {
+    /* max-width: var(--content-width); */
+    /* margin: 0 auto; */
+    padding: 2rem 0rem;
+  }
+
+  .portfolio-item-header {
+    margin-bottom: 2rem;
+  }
+
+  .portfolio-item-header header {
+    margin-top: 0rem;
+  }
+
+  .portfolio-item-header h1 {
+    font-size: var(--font-size-l);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-heading);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .portfolio-item-header .description {
+    font-size: var(--font-size-m);
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .portfolio-item-header .external-link a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: var(--font-weight-bold);
+    transition: opacity 0.2s ease;
+  }
+
+  .portfolio-item-header .external-link a:hover {
+    opacity: 0.8;
+  }
+
+  .portfolio-item-body {
+    color: var(--color-text-body);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 767px) {
+    .portfolio-item-content {
+      padding: 1rem 0rem;
+    }
+
+    .portfolio-item-header h1 {
+      font-size: var(--font-size-l);
+    }
+  }
+</style>

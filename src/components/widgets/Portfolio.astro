@@ -1,0 +1,197 @@
+---
+import { getCollection } from 'astro:content'
+import HoverIcons from '@/components/ui/HoverIcons.astro'
+
+// Get all portfolio items
+const illustration = await getCollection('illustration')
+const creativeCode = await getCollection('creativeCode')
+const typeDesign = await getCollection('typeDesign')
+
+// Filter out Genuary daily posts (keep only main genuary-2026 page)
+const filterCreativeCode = (items: any[]) => 
+  items.filter(item => !item.id.includes('genuary-2026/'))
+
+// Sort by order (if provided) or by title
+const sortItems = (items: any[]) => 
+  items.sort((a, b) => {
+    if (a.data.order && b.data.order) return a.data.order - b.data.order
+    return a.data.title.localeCompare(b.data.title)
+  })
+
+// Helper function to convert collection names to URL-friendly format
+const getCollectionUrl = (collection: string) => {
+  const urlMap: Record<string, string> = {
+    'illustration': 'illustration',
+    'creativeCode': 'creative-code',
+    'typeDesign': 'type-design'
+  }
+  return urlMap[collection] || collection
+}
+
+// Helper function to resolve thumbnail path to absolute public URL
+const resolveThumbnailPath = (thumbnailPath: string, collection: string): string => {
+  // thumbnailPath is like: ./_assets/soopergrid/soopergrid-thumb.png
+  // We need to extract the asset subdirectory and filename
+  const match = thumbnailPath.match(/\/_assets\/(.+)$/)
+  if (match) {
+    const assetPath = match[1]
+    // Serve from public/portfolio-thumbnails/{collection-name}/{assetpath}
+    return `/portfolio-thumbnails/${getCollectionUrl(collection)}/${assetPath}`
+  }
+  return thumbnailPath
+}
+
+const sortedIllustration = sortItems(illustration)
+const sortedCreativeCode = sortItems(filterCreativeCode(creativeCode))
+const sortedTypeDesign = sortItems(typeDesign)
+---
+
+<section class="portfolio">
+  <HoverIcons />
+  <div class="portfolio-grid">
+    <!-- Illustration Column -->
+    <div class="portfolio-column">
+      <h2>Art & Illustration</h2>
+      <div class="portfolio-items">
+        {sortedIllustration.map((item) => (
+          <article class="portfolio-item">
+            <h3>
+              <a 
+                href={`/${getCollectionUrl(item.collection)}/${item.id}/`}
+                data-thumbnail={resolveThumbnailPath(item.data.thumbnail, item.collection)}
+                data-title={item.data.title}
+                class="portfolio-link"
+              >
+                {item.data.title}
+              </a>
+            </h3>
+            <p>{item.data.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <!-- Creative Code Column -->
+    <div class="portfolio-column">
+      <h2>Creative Code</h2>
+      <div class="portfolio-items">
+        {sortedCreativeCode.map((item) => (
+          <article class="portfolio-item">
+            <h3>
+              <a 
+                href={`/${getCollectionUrl(item.collection)}/${item.id}/`}
+                data-thumbnail={resolveThumbnailPath(item.data.thumbnail, item.collection)}
+                data-title={item.data.title}
+                class="portfolio-link"
+              >
+                {item.data.title}
+              </a>
+            </h3>
+            <p>{item.data.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <!-- Type Design Column -->
+    <div class="portfolio-column">
+      <h2>Type Design</h2>
+      <div class="portfolio-items">
+        {sortedTypeDesign.map((item) => (
+          <article class="portfolio-item">
+            <h3>
+              <a 
+                href={`/${getCollectionUrl(item.collection)}/${item.id}/`}
+                data-thumbnail={resolveThumbnailPath(item.data.thumbnail, item.collection)}
+                data-title={item.data.title}
+                class="portfolio-link"
+              >
+                {item.data.title}
+              </a>
+            </h3>
+            <p>{item.data.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+
+  .portfolio-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .portfolio-column {
+    flex: 1;
+    min-width: 300px;
+    padding-bottom: 2rem;
+  }
+
+  .portfolio-column h2 {
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-regular);
+    margin-bottom: 0rem;
+    margin-top: 0rem;
+    color: var(--text-secondary);
+  }
+
+  .portfolio-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .portfolio-item h3 {
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-regular);
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+  }
+
+  .portfolio-item h3 a {
+    color: var(--color-text-heading);
+    text-decoration: underline;
+    transition: color 0.2s ease;
+  }
+
+  .portfolio-item h3 a:hover {
+    color: var(--color-accent);
+  }
+
+  .portfolio-item p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Ensure three columns on larger screens */
+  @media (min-width: 1024px) {
+    .portfolio-grid {
+      gap: 4rem;
+    }
+    
+    .portfolio-column {
+      flex: 1 1 calc(33.333% - 2.667rem);
+      min-width: 0;
+    }
+  }
+
+  /* Stack on smaller screens */
+  @media (max-width: 767px) {
+    .portfolio-grid {
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .portfolio-column {
+      flex: none;
+      min-width: auto;
+    }
+  }
+</style>

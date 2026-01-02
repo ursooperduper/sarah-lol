@@ -1,27 +1,59 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content'
-import PostLayout from '@/layouts/PostLayout.astro'
 import { render } from 'astro:content'
+import PostLayout from '@/layouts/PostLayout.astro'
+import PortfolioLayout from '@/layouts/PortfolioLayout.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts')
-  return posts
+  const illustration = await getCollection('illustration')
+  const creativeCode = await getCollection('creativeCode')
+  const typeDesign = await getCollection('typeDesign')
+
+  const postPaths = posts
     .filter((post) => !post.id.startsWith('_'))
     .map((post) => ({
       params: { slug: post.id },
-      props: post
+      props: { entry: post, type: 'post' }
     }))
+
+  const portfolioPaths = [
+    ...illustration.map((item) => ({
+      params: { slug: `illustration/${item.id}` },
+      props: { entry: item, type: 'portfolio' }
+    })),
+    ...creativeCode.map((item) => ({
+      params: { slug: `creative-code/${item.id}` },
+      props: { entry: item, type: 'portfolio' }
+    })),
+    ...typeDesign.map((item) => ({
+      params: { slug: `type-design/${item.id}` },
+      props: { entry: item, type: 'portfolio' }
+    }))
+  ]
+
+  return [...postPaths, ...portfolioPaths]
 }
 
-type Props = CollectionEntry<'posts'>
+type Props = {
+  entry: CollectionEntry<'posts'> | CollectionEntry<'illustration'> | CollectionEntry<'creativeCode'> | CollectionEntry<'typeDesign'>
+  type: 'post' | 'portfolio'
+}
 
-const post = Astro.props
-const { Content, remarkPluginFrontmatter } = await render(post)
+const { entry, type } = Astro.props
 
-const readingTime = remarkPluginFrontmatter.readingTime
-const toc = remarkPluginFrontmatter.toc || []
+const { Content, remarkPluginFrontmatter } = await render(entry)
+
+const readingTime = remarkPluginFrontmatter?.readingTime
+const toc = remarkPluginFrontmatter?.toc || []
 ---
 
-<PostLayout {...post.data} readingTime={readingTime} toc={toc}>
-  <Content />
-</PostLayout>
+{type === 'post' ? (
+  <PostLayout {...entry.data} readingTime={readingTime} toc={toc}>
+    <Content />
+  </PostLayout>
+) : (
+  <PortfolioLayout entry={entry}>
+    <Content />
+  </PortfolioLayout>
+)}

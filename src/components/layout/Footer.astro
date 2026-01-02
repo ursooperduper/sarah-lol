@@ -13,9 +13,7 @@ const today = new Date()
       {themeConfig.site.author}
     </div>
     <div class="powered-by">
-      Powered by{' '}
-      <a href="https://astro.build">Astro</a> &{' '}
-      <a href="https://github.com/the3ash/astro-chiri">Chiri</a>
+      It ain't what you got, it's what you make. - Shovels & Rope
     </div>
   </div>
 </footer>
@@ -41,6 +39,8 @@ const today = new Date()
   .copyright,
   .powered-by {
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .copyright .date {

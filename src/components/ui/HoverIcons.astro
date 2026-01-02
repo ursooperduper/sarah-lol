@@ -1,0 +1,285 @@
+---
+---
+
+<div id="hover-icons-container"></div>
+
+<script>
+  const colors = ['multi', 'red', 'green', 'blue'];
+  
+  // Get theme preference
+  function getCurrentTheme(): string {
+    // Check CSS classes on documentElement (how ThemeManager works)
+    if (document.documentElement.classList.contains('dark')) {
+      return 'dark';
+    }
+    if (document.documentElement.classList.contains('light')) {
+      return 'light';
+    }
+    // Fallback to system preference or default to light
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }
+  
+  // Generate random position within viewport
+  function getRandomPosition(): { x: number; y: number } {
+    const margin = 50; // Keep icons away from edges
+    return {
+      x: Math.random() * (window.innerWidth - margin * 2) + margin,
+      y: Math.random() * (window.innerHeight - margin * 2) + margin
+    };
+  }
+  
+  // Get random color
+  function getRandomColor(): string {
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+  
+  // Create and display icon
+  function showHoverIcon(iconType: string): HTMLDivElement | null {
+    const container = document.getElementById('hover-icons-container');
+    if (!container) return;
+    
+    const theme = getCurrentTheme();
+    const color = getRandomColor();
+    const position = getRandomPosition();
+    
+    // Create icon element
+    const iconDiv = document.createElement('div');
+    iconDiv.className = 'hover-icon';
+    iconDiv.style.cssText = `
+      position: fixed;
+      left: ${position.x}px;
+      top: ${position.y}px;
+      width: 32px;
+      height: 32px;
+      transform: rotate(45deg);
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    `;
+    
+    // Create img element
+    const img = document.createElement('img');
+    const imagePath = `/src/content/about/_assets/images/${theme}/${iconType}-${color}.svg`;
+    img.src = imagePath;
+    img.alt = `${iconType} icon`;
+    img.style.cssText = `
+      width: 500%;
+      height: 500%;
+      object-fit: contain;
+    `;
+    
+    iconDiv.appendChild(img);
+    container.appendChild(iconDiv);
+    
+    // Fade in
+    requestAnimationFrame(() => {
+      iconDiv.style.opacity = '1.0';
+    });
+    
+    // Store reference for cleanup
+    return iconDiv;
+  }
+  
+  // Remove icon with fade out
+  function hideHoverIcon(iconElement: HTMLDivElement | null): void {
+    if (!iconElement) return;
+    
+    iconElement.style.opacity = '0';
+    setTimeout(() => {
+      if (iconElement.parentNode) {
+        iconElement.parentNode.removeChild(iconElement);
+      }
+    }, 300);
+  }
+  
+  // Setup hover effects for site title
+  function setupSiteTitleHover() {
+    const siteTitle = document.querySelector('header nav a[href="/"]');
+    if (!siteTitle) return;
+    
+    let currentIcon: HTMLDivElement | null = null;
+    
+    siteTitle.addEventListener('mouseenter', () => {
+      currentIcon = showHoverIcon('eye');
+    });
+    
+    siteTitle.addEventListener('mouseleave', () => {
+      if (currentIcon) {
+        hideHoverIcon(currentIcon);
+        currentIcon = null;
+      }
+    });
+  }
+  
+  // Setup hover effects for back button
+  function setupBackButtonHover() {
+    const backButton = document.querySelector('.back-button');
+    if (!backButton) return;
+    
+    let currentIcon: HTMLDivElement | null = null;
+    
+    backButton.addEventListener('mouseenter', () => {
+      currentIcon = showHoverIcon('eye');
+    });
+    
+    backButton.addEventListener('mouseleave', () => {
+      if (currentIcon) {
+        hideHoverIcon(currentIcon);
+        currentIcon = null;
+      }
+    });
+  }
+  
+  // Create and display portfolio thumbnail
+  function showPortfolioThumbnail(thumbnailPath: string, title: string | null): HTMLDivElement | null {
+    const container = document.getElementById('hover-icons-container');
+    if (!container) return null;
+    
+    const position = getRandomPosition();
+    
+    // Create image wrapper
+    const imageDiv = document.createElement('div');
+    imageDiv.className = 'portfolio-thumbnail';
+    imageDiv.style.cssText = `
+      position: fixed;
+      left: ${position.x}px;
+      top: ${position.y}px;
+      max-width: 200px;
+      max-height: 200px;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 0.25rem;
+      overflow: hidden;
+    `;
+    
+    // Create img element
+    const img = document.createElement('img');
+    img.src = thumbnailPath;
+    img.alt = title || 'Portfolio thumbnail';
+    img.style.cssText = `
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    `;
+    
+    imageDiv.appendChild(img);
+    container.appendChild(imageDiv);
+    
+    // Fade in
+    requestAnimationFrame(() => {
+      imageDiv.style.opacity = '1.0';
+    });
+    
+    return imageDiv;
+  }
+  
+  // Setup hover effects for portfolio links
+  function setupPortfolioLinksHover() {
+    const portfolioLinks = document.querySelectorAll('a.portfolio-link');
+    
+    portfolioLinks.forEach(link => {
+      let currentImage: HTMLDivElement | null = null;
+      const thumbnail = link.getAttribute('data-thumbnail');
+      const title = link.getAttribute('data-title');
+      
+      if (!thumbnail) return; // Skip if no thumbnail
+      
+      link.addEventListener('mouseenter', () => {
+        currentImage = showPortfolioThumbnail(thumbnail, title);
+      });
+      
+      link.addEventListener('mouseleave', () => {
+        if (currentImage) {
+          hideHoverIcon(currentImage);
+          currentImage = null;
+        }
+      });
+    });
+  }
+  
+  // Setup hover effects for social links
+  function setupSocialLinksHover() {
+    const socialLinks = {
+      'instagram.com': 'instagram',
+      'threads.net': 'threads',
+      'linkedin.com': 'linkedin',
+      'github.com': 'github'
+    };
+    
+    Object.entries(socialLinks).forEach(([domain, iconType]) => {
+      const links = document.querySelectorAll(`a[href*="${domain}"]`);
+      
+      links.forEach(link => {
+        let currentIcon: HTMLDivElement | null = null;
+        
+        link.addEventListener('mouseenter', () => {
+          currentIcon = showHoverIcon(iconType);
+        });
+        
+        link.addEventListener('mouseleave', () => {
+          if (currentIcon) {
+            hideHoverIcon(currentIcon);
+            currentIcon = null;
+          }
+        });
+      });
+    });
+  }
+  
+  // Initialize when DOM is ready
+  function initialize() {
+    setupSiteTitleHover();
+    setupBackButtonHover();
+    setupPortfolioLinksHover();
+    setupSocialLinksHover();
+  }
+  
+  // Wait for DOM and run initialization
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize);
+  } else {
+    initialize();
+  }
+  
+  // Re-initialize on theme changes (for theme-specific icons)
+  const themeObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        // Clear any existing hover icons when theme changes
+        const container = document.getElementById('hover-icons-container');
+        if (container) {
+          container.innerHTML = '';
+        }
+      }
+    });
+  });
+  
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+</script>
+
+<style>
+  #hover-icons-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+  }
+  
+  .hover-icon {
+    position: absolute;
+    transition: opacity 0.3s ease;
+  }
+</style>
