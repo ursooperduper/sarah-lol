@@ -10,6 +10,8 @@ SOOPERgrid is an interactive tool for creating dynamic grid-based compositions. 
 
 ![SOOPERgrid screenshot](./_assets/soopergrid/soopergrid-dark.png)
 
+**<a href="https://soopergrid.com" target="_blank">Click here to open SOOPERgrid in a new window</a>**
+
 Features include:
 
 - Real-time generation with customizable parameters
