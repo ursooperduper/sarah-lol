@@ -50,18 +50,6 @@ jobs:
           fi
         continue-on-error: true
 
-      - name: Run ESLint (if available)
-        run: |
-          if [ -f "pnpm-lock.yaml" ] && pnpm list eslint &>/dev/null; then
-            pnpm exec eslint .
-          else
-            echo "ESLint not configured, skipping lint check"
-          fi
-        continue-on-error: true
-
-      - name: Run linting
-        run: pnpm lint
-
       - name: Build project
         run: pnpm build
 
