@@ -9,6 +9,9 @@
 
     if (!viewer || !viewerImg || viewerImg.tagName !== 'IMG') return
 
+    // Ensure any leftover scroll locks are cleared before wiring up
+    cleanupScrollLock()
+
     // Display image in fullscreen viewer overlay
     function showImage(src: string, alt?: string) {
       if (viewerImg && src) {
@@ -31,6 +34,12 @@
     // Hide the image viewer and restore page scroll
     function hideImage() {
       viewer!.classList.remove('active')
+      document.body.classList.remove('image-viewer-open')
+      document.body.style.overflow = ''
+    }
+
+    // Remove scroll lock in case of navigation while viewer is open
+    function cleanupScrollLock() {
       document.body.classList.remove('image-viewer-open')
       document.body.style.overflow = ''
     }
@@ -105,6 +114,11 @@
   }
 
   document.addEventListener('astro:page-load', initImageViewer)
+  document.addEventListener('astro:before-swap', () => {
+    // Clear any lingering scroll locks before Astro replaces the page
+    document.body.classList.remove('image-viewer-open')
+    document.body.style.overflow = ''
+  })
 </script>
 
 <style>
