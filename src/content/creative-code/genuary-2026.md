@@ -28,8 +28,10 @@ A month-long creative coding challenge exploring generative art through daily ex
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 03</h2>
+    <a href="/creative-code/genuary-2026/03/">
+      <div class="gen-thumb"><img src="/genuary-2026/03/thumb-03.png" alt="Day 3 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 03</h2>
+    </a>
     <p>Fibonacci forever.</p>
   </div>
 
