@@ -68,8 +68,10 @@ A month-long creative coding challenge exploring generative art through daily ex
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 08</h2>
+    <a href="/creative-code/genuary-2026/08/">
+      <div class="gen-thumb"><img src="/genuary-2026/08/thumb-08.png" alt="Day 8 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 08</h2>
+    </a>
     <p>A City. Create a generative metropolis.</p>
   </div>
 
