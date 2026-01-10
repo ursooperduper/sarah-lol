@@ -60,8 +60,10 @@ A month-long creative coding challenge exploring generative art through daily ex
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 07</h2>
+    <a href="/creative-code/genuary-2026/07/">
+      <div class="gen-thumb"><img src="/genuary-2026/07/thumb-07.png" alt="Day 7 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 07</h2>
+    </a>
     <p>Boolean algebra.</p>
   </div>
 
