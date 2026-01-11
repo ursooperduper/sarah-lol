@@ -76,8 +76,10 @@ A month-long creative coding challenge exploring generative art through daily ex
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 09</h2>
+    <a href="/creative-code/genuary-2026/09/">
+      <div class="gen-thumb"><img src="/genuary-2026/09/thumb-09.png" alt="Day 9 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 09</h2>
+    </a>
     <p>Crazy automaton. Cellular automata with crazy rules.</p>
   </div>
 
