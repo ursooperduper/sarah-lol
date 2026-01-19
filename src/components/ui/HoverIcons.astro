@@ -5,6 +5,29 @@
 
 <script>
   const colors = ['multi', 'red', 'green', 'blue'];
+  const listeners: Array<{ el: Element; type: string; handler: EventListenerOrEventListenerObject; options?: boolean | AddEventListenerOptions }>
+    = [];
+
+  const addListener = (
+    el: Element | null,
+    type: string,
+    handler: EventListenerOrEventListenerObject,
+    options?: boolean | AddEventListenerOptions
+  ) => {
+    if (!el) return;
+    el.addEventListener(type, handler, options);
+    listeners.push({ el, type, handler, options });
+  };
+
+  function cleanupListeners() {
+    listeners.forEach(({ el, type, handler, options }) => el.removeEventListener(type, handler, options));
+    listeners.length = 0;
+  }
+
+  function clearHoverIcons() {
+    const container = document.getElementById('hover-icons-container');
+    if (container) container.innerHTML = '';
+  }
   
   // Get theme preference
   function getCurrentTheme(): string {
@@ -103,11 +126,11 @@
     
     let currentIcon: HTMLDivElement | null = null;
     
-    siteTitle.addEventListener('mouseenter', () => {
+    addListener(siteTitle, 'mouseenter', () => {
       currentIcon = showHoverIcon('eye');
     });
     
-    siteTitle.addEventListener('mouseleave', () => {
+    addListener(siteTitle, 'mouseleave', () => {
       if (currentIcon) {
         hideHoverIcon(currentIcon);
         currentIcon = null;
@@ -122,11 +145,11 @@
     
     let currentIcon: HTMLDivElement | null = null;
     
-    backButton.addEventListener('mouseenter', () => {
+    addListener(backButton, 'mouseenter', () => {
       currentIcon = showHoverIcon('eye');
     });
     
-    backButton.addEventListener('mouseleave', () => {
+    addListener(backButton, 'mouseleave', () => {
       if (currentIcon) {
         hideHoverIcon(currentIcon);
         currentIcon = null;
@@ -191,11 +214,11 @@
       
       if (!thumbnail) return; // Skip if no thumbnail
       
-      link.addEventListener('mouseenter', () => {
+      addListener(link, 'mouseenter', () => {
         currentImage = showPortfolioThumbnail(thumbnail, title);
       });
       
-      link.addEventListener('mouseleave', () => {
+      addListener(link, 'mouseleave', () => {
         if (currentImage) {
           hideHoverIcon(currentImage);
           currentImage = null;
@@ -219,11 +242,11 @@
       links.forEach(link => {
         let currentIcon: HTMLDivElement | null = null;
         
-        link.addEventListener('mouseenter', () => {
+        addListener(link, 'mouseenter', () => {
           currentIcon = showHoverIcon(iconType);
         });
         
-        link.addEventListener('mouseleave', () => {
+        addListener(link, 'mouseleave', () => {
           if (currentIcon) {
             hideHoverIcon(currentIcon);
             currentIcon = null;
@@ -235,6 +258,8 @@
   
   // Initialize when DOM is ready
   function initialize() {
+    cleanupListeners();
+    clearHoverIcons();
     setupSiteTitleHover();
     setupBackButtonHover();
     setupPortfolioLinksHover();
@@ -247,6 +272,15 @@
   } else {
     initialize();
   }
+  
+  // Clean up before Astro swaps the DOM to prevent duplicate listeners
+  document.addEventListener('astro:before-swap', () => {
+    cleanupListeners();
+    clearHoverIcons();
+  });
+
+  // Re-initialize after Astro view transitions
+  document.addEventListener('astro:page-load', initialize);
   
   // Re-initialize on theme changes (for theme-specific icons)
   const themeObserver = new MutationObserver((mutations) => {

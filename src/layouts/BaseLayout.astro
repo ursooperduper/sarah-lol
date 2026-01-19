@@ -10,6 +10,7 @@ import type { LayoutProps } from '@/types'
 type Props = LayoutProps
 
 const { type = 'page' } = Astro.props
+const disableTransitions = Astro.url.pathname.includes('/creative-code/genuary-2026/')
 const language = themeConfig.site.language || 'en-US'
 const contentWidth = themeConfig.general.contentWidth
 const fadeAnimation = themeConfig.general.fadeAnimation
@@ -21,7 +22,7 @@ const finalWidth = shouldUseCustomWidth ? `${widthValue}rem` : '25rem'
 <html lang={language}>
   <head>
     <ThemeManager />
-    {fadeAnimation && <ClientRouter />}
+    {fadeAnimation && !disableTransitions && <ClientRouter />}
     <slot name="head" />
   </head>
   <body

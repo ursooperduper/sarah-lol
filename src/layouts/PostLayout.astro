@@ -22,6 +22,9 @@ const { title, pubDate, readingTime, toc } = Astro.props as PostLayoutProps
 
 const postSlug = Astro.url.pathname.split('/').filter(Boolean).pop() || ''
 const ogImage = `/open-graph/${postSlug}.png`
+
+// Check if this is a Genuary page - disable view transitions for these
+const isGenuary = Astro.url.pathname.includes('/creative-code/genuary-2026/')
 ---
 
 <BaseLayout
@@ -35,7 +38,7 @@ const ogImage = `/open-graph/${postSlug}.png`
     ogImage={ogImage}
     slot="head"
   />
-  <div class="post-container">
+  <div class="post-container" transition:animate={isGenuary ? "none" : undefined}>
     <main>
       <div class="prose">
         <BackButton />
@@ -68,6 +71,69 @@ const ogImage = `/open-graph/${postSlug}.png`
     {themeConfig.general.footer && <Footer />}
   </div>
 </BaseLayout>
+
+<script is:inline>
+  // Clean up old sketch scripts before new content loads to prevent variable conflicts
+  ;(() => {
+    function cleanupOldSketches() {
+      if (!window.location.pathname.includes('/creative-code/genuary-2026/')) return
+
+      console.log('[Genuary] Cleaning up old sketches')
+      
+      // Remove old p5 sketch scripts and variables
+      document.querySelectorAll('script[src^="/genuary-2026/"], script[src^="/p5"]').forEach((script) => {
+        console.log('[Genuary] Removing old script:', script.src)
+        script.remove()
+      })
+
+      // Clear sketch-related global variables that might persist
+      const keysToDelete = Object.keys(window).filter(
+        (key) => key.match(/^(sketch|img|canvas|p5|WIDTH|HEIGHT|CELL_SIZE)/) || 
+                 typeof window[key] === 'object' && window[key]?.canvas
+      )
+      
+      keysToDelete.forEach((key) => {
+        try {
+          delete window[key]
+        } catch (e) {
+          // Some window properties can't be deleted, that's ok
+        }
+      })
+
+      // Remove p5 instance if it exists
+      if (window.p5 && window.p5.Renderer && window.p5.Renderer.prototype) {
+        const canvases = document.querySelectorAll('canvas')
+        canvases.forEach((canvas) => {
+          canvas.remove?.()
+        })
+      }
+    }
+
+    document.addEventListener('astro:before-swap', cleanupOldSketches)
+  })()
+</script>
+
+<script is:inline>
+  // Genuary pages have transitions disabled, so just clear globals on load
+  if (window.location.pathname.includes('/creative-code/genuary-2026/')) {
+    const varsToDelete = [
+      'WIDTH', 'HEIGHT', 'CELL_SIZE', 'CELL_SIZE_2', 'DOT_HSL',
+      'img', 'imgBuffer', 'shapeType', 'shapeSizeMultiplier',
+      'setup', 'draw', 'keyPressed', 'mousePressed', 'preload',
+      'p5', 'sketch'
+    ]
+    
+    varsToDelete.forEach((varName) => {
+      try {
+        delete window[varName]
+      } catch (e) {
+        // Ignore errors for undeletable properties
+      }
+    })
+
+    console.log('[Genuary] Cleared old global variables on page load')
+  }
+</script>
 
 <style>
   .post-container {

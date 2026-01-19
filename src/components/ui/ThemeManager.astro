@@ -124,7 +124,7 @@
     // Apply immediately on script load
     applyTheme()
 
-    // Listen for navigation events
+    // Listen for navigation events - apply theme synchronously before page preparation
     document.addEventListener('astro:before-preparation', applyTheme)
 
     // Apply theme after DOM changes (both swap and page load)
@@ -134,14 +134,14 @@
         const appliedTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
 
         if (currentTheme !== appliedTheme) {
-          // Use requestAnimationFrame to ensure theme is applied in the next frame, avoiding conflicts with view transition
-          requestAnimationFrame(() => {
-            window.ThemeManager.applyTheme(currentTheme)
-          })
+          // Apply theme immediately without requestAnimationFrame to prevent flash
+          window.ThemeManager.applyTheme(currentTheme)
         }
       }
     }
 
+    // Apply before swap to prevent flash
+    document.addEventListener('astro:before-swap', applyThemeAfterNavigation)
     document.addEventListener('astro:after-swap', applyThemeAfterNavigation)
     document.addEventListener('astro:page-load', applyThemeAfterNavigation)
 

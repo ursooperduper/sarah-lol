@@ -92,20 +92,26 @@ A month-long creative coding challenge exploring generative art through daily ex
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 11</h2>
+    <a href="/creative-code/genuary-2026/11/">
+      <div class="gen-thumb"><img src="/genuary-2026/11/thumb-11.png" alt="Day 11 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 11</h2>
+    </a>
     <p>Quine.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 12</h2>
+    <a href="/creative-code/genuary-2026/12/">
+      <div class="gen-thumb"><img src="/genuary-2026/12/thumb-12.png" alt="Day 12 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 12</h2>
+    </a>
     <p>Boxes only.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 13</h2>
+    <a href="/creative-code/genuary-2026/13/">
+      <div class="gen-thumb"><img src="/genuary-2026/13/thumb-13.png" alt="Day 13 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 13</h2>
+    </a>
     <p>Self portrait.</p>
   </div>
 
