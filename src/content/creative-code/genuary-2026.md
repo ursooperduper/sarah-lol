@@ -116,8 +116,10 @@ A month-long creative coding challenge exploring generative art through daily ex
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 14</h2>
+    <a href="/creative-code/genuary-2026/14/">
+      <div class="gen-thumb"><img src="/genuary-2026/14/thumb-14.png" alt="Day 14 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 14</h2>
+    </a>
     <p>Everything fits perfectly.</p>
   </div>
 
