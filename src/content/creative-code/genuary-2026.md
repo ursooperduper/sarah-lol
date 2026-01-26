@@ -124,68 +124,90 @@ A month-long creative coding challenge exploring generative art through daily ex
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 15</h2>
+    <a href="/creative-code/genuary-2026/15/">
+      <div class="gen-thumb"><img src="/genuary-2026/15/thumb-15.png" alt="Day 15 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 15</h2>
+    </a>
     <p>Create an invisible object where only the shadows can be seen.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 16</h2>
+    <a href="/creative-code/genuary-2026/16/">
+      <div class="gen-thumb"><img src="/genuary-2026/16/thumb-16.png" alt="Day 16 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 16</h2>
+    </a>
     <p>Order and disorder.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 17</h2>
+    <a href="/creative-code/genuary-2026/17/">
+      <div class="gen-thumb"><img src="/genuary-2026/17/thumb-17.png" alt="Day 17 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 17</h2>
+    </a>
     <p>Wallpaper group.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 18</h2>
+    <a href="/creative-code/genuary-2026/18/">
+      <div class="gen-thumb"><img src="/genuary-2026/18/thumb-18.png" alt="Day 18 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 18</h2>
+    </a>
     <p>Unexpected path.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 19</h2>
+    <a href="/creative-code/genuary-2026/19/">
+      <div class="gen-thumb"><img src="/genuary-2026/19/thumb-19.png" alt="Day 19 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 19</h2>
+    </a>
     <p>16x16.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 20</h2>
+    <a href="/creative-code/genuary-2026/20/">
+      <div class="gen-thumb"><img src="/genuary-2026/20/thumb-20.png" alt="Day 20 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 20</h2>
+    </a>
     <p>One line.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 21</h2>
+    <a href="/creative-code/genuary-2026/21/">
+      <div class="gen-thumb"><img src="/genuary-2026/21/thumb-21.png" alt="Day 21 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 21</h2>
+    </a>
     <p>Bauhaus Poster.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 22</h2>
+    <a href="/creative-code/genuary-2026/22/">
+      <div class="gen-thumb"><img src="/genuary-2026/22/thumb-22.png" alt="Day 22 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 22</h2>
+    </a>
     <p>Pen plotter ready.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 23</h2>
+    <a href="/creative-code/genuary-2026/23/">
+      <div class="gen-thumb"><img src="/genuary-2026/23/thumb-23.png" alt="Day 23 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 23</h2>
+    </a>
     <p>Transparency.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 24</h2>
+    <a href="/creative-code/genuary-2026/24/">
+      <div class="gen-thumb"><img src="/genuary-2026/24/thumb-24.png" alt="Day 24 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 24</h2>
+    </a>
     <p>Perfectionist’s nightmare.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 25</h2>
+    <a href="/creative-code/genuary-2026/25/">
+      <div class="gen-thumb"><img src="/genuary-2026/25/thumb-25.png" alt="Day 25 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 25</h2>
+    </a>
     <p>Organic Geometry.</p>
   </div>
 
