@@ -269,7 +269,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(CONFIG.WIDTH, CONFIG.HEIGHT, SVG);
+  const canvas = createCanvas(CONFIG.WIDTH, CONFIG.HEIGHT, SVG);
+  canvas.parent('sketch-holder');
   background(CONFIG.BG);
 }
 
