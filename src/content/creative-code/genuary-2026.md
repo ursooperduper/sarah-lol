@@ -220,14 +220,18 @@ A month-long creative coding challenge exploring generative art through daily ex
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 27</h2>
+    <a href="/creative-code/genuary-2026/27/">
+      <div class="gen-thumb"><img src="/genuary-2026/27/thumb-27.png" alt="Day 27 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 27</h2>
+    </a>
     <p>Lifeform.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 28</h2>
+    <a href="/creative-code/genuary-2026/28/">
+      <div class="gen-thumb"><img src="/genuary-2026/28/thumb-28.png" alt="Day 28 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 28</h2>
+    </a>
     <p>No libraries, no canvas, only HTML elements.</p>
   </div>
 
