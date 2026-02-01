@@ -236,20 +236,26 @@ A month-long creative coding challenge exploring generative art through daily ex
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 29</h2>
+    <a href="/creative-code/genuary-2026/29/">
+      <div class="gen-thumb"><img src="/genuary-2026/29/thumb-29.png" alt="Day 29 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 29</h2>
+    </a>
     <p>Genetic evolution and mutation.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 30</h2>
+    <a href="/creative-code/genuary-2026/30/">
+      <div class="gen-thumb"><img src="/genuary-2026/30/thumb-30.png" alt="Day 30 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 30</h2>
+    </a>
     <p>Its not a bug, its a feature.</p>
   </div>
 
   <div class="gen-post">
-    <div class="gen-thumb coming-soon"><em>Coming soon</em></div>
-    <h2>Jan 31</h2>
+    <a href="/creative-code/genuary-2026/31/">
+      <div class="gen-thumb"><img src="/genuary-2026/31/thumb-31.png" alt="Day 31 thumbnail" width="200" height="200" /></div>
+      <h2>Jan 31</h2>
+    </a>
     <p>GLSL day.</p>
   </div>
 </div>
