@@ -272,6 +272,7 @@ function setup() {
   const canvas = createCanvas(CONFIG.WIDTH, CONFIG.HEIGHT, SVG);
   canvas.parent('sketch-holder');
   background(CONFIG.BG);
+  setupControls();
 }
 
 function draw() {
@@ -2212,6 +2213,146 @@ function setJointNodesEnabled(enabled) {
   CONFIG.JOINT_NODES_ENABLED = enabled;
   if (built && spinePts.length > 0) {
     growthT = 1;
+  }
+}
+
+function setupControls() {
+  const widthProfileSelect = document.getElementById('widthProfileSelect');
+  if (!widthProfileSelect) return;
+
+  const bindRange = (inputId, valueId, setter, parser = Number) => {
+    const input = document.getElementById(inputId);
+    const value = document.getElementById(valueId);
+    if (!input) return;
+
+    const syncValue = (raw) => {
+      const parsed = parser(raw);
+      setter(parsed);
+      if (value) value.textContent = String(parsed);
+    };
+
+    input.addEventListener('input', (event) => {
+      syncValue(event.target.value);
+    });
+
+    return { input, value, syncValue };
+  };
+
+  const bindCheckbox = (inputId, setter, initialChecked) => {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    if (typeof initialChecked === 'boolean') {
+      input.checked = initialChecked;
+    }
+    setter(input.checked);
+    input.addEventListener('change', (event) => {
+      setter(event.target.checked);
+    });
+  };
+
+  const bindSelect = (selectId, setter, initialValue) => {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+    if (initialValue) {
+      select.value = initialValue;
+    }
+    setter(select.value);
+    select.addEventListener('change', (event) => {
+      setter(event.target.value);
+    });
+  };
+
+  bindSelect('widthProfileSelect', setWidthProfile, CONFIG.BODY_WIDTH_PROFILE);
+
+  const legCount = bindRange('legCountSlider', 'legCountValue', setLegCount, (v) => parseInt(v, 10));
+  if (legCount?.input) {
+    legCount.input.value = String(CONFIG.LEG_COUNT_CONFIGURABLE);
+    legCount.syncValue(legCount.input.value);
+  }
+
+  bindCheckbox('jointNodesEnabled', setJointNodesEnabled, CONFIG.JOINT_NODES_ENABLED);
+  bindCheckbox('flipHeadTail', setFlipHeadTail, CONFIG.FLIP_HEAD_TAIL);
+
+  bindCheckbox('antennaeEnabled', setAntennaeEnabled, CONFIG.ANTENNAE_ENABLED);
+  bindSelect('antennaeStyle', setAntennaeStyle, CONFIG.ANTENNAE_STYLE);
+  const antennaLength = bindRange('antennalLengthSlider', 'antennalLengthValue', setAntennaeLength, (v) => parseFloat(v));
+  if (antennaLength?.input) {
+    antennaLength.input.value = String(CONFIG.ANTENNAE_LENGTH);
+    antennaLength.syncValue(antennaLength.input.value);
+  }
+  const antennaAngle = bindRange('antennaeAngleSlider', 'antennaeAngleValue', setAntennaeAngle, (v) => parseFloat(v));
+  if (antennaAngle?.input) {
+    antennaAngle.input.value = String(CONFIG.ANTENNAE_ANGLE);
+    antennaAngle.syncValue(antennaAngle.input.value);
+  }
+  const antennaSegments = bindRange('antennaeSegmentsSlider', 'antennaeSegmentsValue', setAntennaeSegments, (v) => parseInt(v, 10));
+  if (antennaSegments?.input) {
+    antennaSegments.input.value = String(CONFIG.ANTENNAE_SEGMENTS);
+    antennaSegments.syncValue(antennaSegments.input.value);
+  }
+  const antennaFeatherCount = bindRange('antennaeFeatherCountSlider', 'antennaeFeatherCountValue', setAntennaeFeatherCount, (v) => parseInt(v, 10));
+  if (antennaFeatherCount?.input) {
+    antennaFeatherCount.input.value = String(CONFIG.ANTENNAE_FEATHER_COUNT);
+    antennaFeatherCount.syncValue(antennaFeatherCount.input.value);
+  }
+
+  bindCheckbox('eyesEnabled', setEyesEnabled, CONFIG.EYES_ENABLED);
+  bindSelect('eyesStyle', setEyesStyle, CONFIG.EYES_STYLE);
+  const eyeSize = bindRange('eyeSizeSlider', 'eyeSizeValue', setEyesSize, (v) => parseFloat(v));
+  if (eyeSize?.input) {
+    eyeSize.input.value = String(CONFIG.EYES_SIZE);
+    eyeSize.syncValue(eyeSize.input.value);
+  }
+  const eyeOffset = bindRange('eyeOffsetSlider', 'eyeOffsetValue', setEyesOffset, (v) => parseFloat(v));
+  if (eyeOffset?.input) {
+    eyeOffset.input.value = String(CONFIG.EYES_OFFSET);
+    eyeOffset.syncValue(eyeOffset.input.value);
+  }
+  const eyeStalk = bindRange('eyeStalkLengthSlider', 'eyeStalkLengthValue', setEyesStalkLength, (v) => parseFloat(v));
+  if (eyeStalk?.input) {
+    eyeStalk.input.value = String(CONFIG.EYES_STALK_LENGTH);
+    eyeStalk.syncValue(eyeStalk.input.value);
+  }
+  const eyeCount = bindRange('eyeCountSlider', 'eyeCountValue', setEyesCount, (v) => parseInt(v, 10));
+  if (eyeCount?.input) {
+    eyeCount.input.value = String(CONFIG.EYES_COUNT);
+    eyeCount.syncValue(eyeCount.input.value);
+  }
+
+  bindCheckbox('tailEnabled', setTailEnabled, CONFIG.TAIL_ENABLED);
+  bindSelect('tailStyle', setTailStyle, CONFIG.TAIL_STYLE);
+  const tailLength = bindRange('tailLengthSlider', 'tailLengthValue', setTailLength, (v) => parseFloat(v));
+  if (tailLength?.input) {
+    tailLength.input.value = String(CONFIG.TAIL_LENGTH);
+    tailLength.syncValue(tailLength.input.value);
+  }
+  const tailSegments = bindRange('tailSegmentsSlider', 'tailSegmentsValue', setTailSegments, (v) => parseInt(v, 10));
+  if (tailSegments?.input) {
+    tailSegments.input.value = String(CONFIG.TAIL_SEGMENTS);
+    tailSegments.syncValue(tailSegments.input.value);
+  }
+  const tailCurve = bindRange('tailCurveSlider', 'tailCurveValue', setTailCurve, (v) => parseFloat(v));
+  if (tailCurve?.input) {
+    tailCurve.input.value = String(CONFIG.TAIL_CURVE);
+    tailCurve.syncValue(tailCurve.input.value);
+  }
+  const tailForkAngle = bindRange('tailForkAngleSlider', 'tailForkAngleValue', setTailForkAngle, (v) => parseFloat(v));
+  if (tailForkAngle?.input) {
+    tailForkAngle.input.value = String(CONFIG.TAIL_FORK_ANGLE);
+    tailForkAngle.syncValue(tailForkAngle.input.value);
+  }
+
+  bindCheckbox('wingsEnabled', setWingsEnabled, CONFIG.WINGS_ENABLED);
+  bindSelect('wingsStyle', setWingsStyle, CONFIG.WINGS_STYLE);
+  const wingSize = bindRange('wingSizeSlider', 'wingSizeValue', setWingsSize, (v) => parseFloat(v));
+  if (wingSize?.input) {
+    wingSize.input.value = String(CONFIG.WINGS_SIZE);
+    wingSize.syncValue(wingSize.input.value);
+  }
+  const wingAngle = bindRange('wingAngleSlider', 'wingAngleValue', setWingsAngle, (v) => parseFloat(v));
+  if (wingAngle?.input) {
+    wingAngle.input.value = String(CONFIG.WINGS_ANGLE);
+    wingAngle.syncValue(wingAngle.input.value);
   }
 }
 
